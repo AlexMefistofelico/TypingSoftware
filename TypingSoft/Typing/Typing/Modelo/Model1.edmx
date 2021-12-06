@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TYPINGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LECCION">
+          <Key>
+            <PropertyRef Name="LeccionID" />
+          </Key>
+          <Property Name="LeccionID" Type="int" Nullable="false" />
+          <Property Name="Parrafo" Type="varchar" MaxLength="600" />
+          <Property Name="PPM" Type="int" />
+        </EntityType>
+        <EntityType Name="NIVEL">
+          <Key>
+            <PropertyRef Name="NivelID" />
+          </Key>
+          <Property Name="NivelID" Type="int" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="LeccionID" Type="int" />
+        </EntityType>
+        <EntityType Name="PROGRESO">
+          <Key>
+            <PropertyRef Name="ProgresoID" />
+          </Key>
+          <Property Name="ProgresoID" Type="int" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="PPMC" Type="int" />
+          <Property Name="Leccion" Type="int" />
+          <Property Name="Nivel" Type="int" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="Modo" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__NIVEL__LeccionID__15502E78">
+          <End Role="LECCION" Type="Self.LECCION" Multiplicity="0..1" />
+          <End Role="NIVEL" Type="Self.NIVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LECCION">
+              <PropertyRef Name="LeccionID" />
+            </Principal>
+            <Dependent Role="NIVEL">
+              <PropertyRef Name="LeccionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NIVEL__UsuarioID__145C0A3F">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="NIVEL" Type="Self.NIVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="NIVEL">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROGRESO__Usuari__239E4DCF">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="PROGRESO" Type="Self.PROGRESO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="PROGRESO">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TYPINGModelStoreContainer">
+          <EntitySet Name="LECCION" EntityType="Self.LECCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NIVEL" EntityType="Self.NIVEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROGRESO" EntityType="Self.PROGRESO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__NIVEL__LeccionID__15502E78" Association="Self.FK__NIVEL__LeccionID__15502E78">
+            <End Role="LECCION" EntitySet="LECCION" />
+            <End Role="NIVEL" EntitySet="NIVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NIVEL__UsuarioID__145C0A3F" Association="Self.FK__NIVEL__UsuarioID__145C0A3F">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="NIVEL" EntitySet="NIVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROGRESO__Usuari__239E4DCF" Association="Self.FK__PROGRESO__Usuari__239E4DCF">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="PROGRESO" EntitySet="PROGRESO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TYPINGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LECCION">
+          <Key>
+            <PropertyRef Name="LeccionID" />
+          </Key>
+          <Property Name="LeccionID" Type="Int32" Nullable="false" />
+          <Property Name="Parrafo" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+          <Property Name="PPM" Type="Int32" />
+          <NavigationProperty Name="NIVEL" Relationship="Self.FK__NIVEL__LeccionID__15502E78" FromRole="LECCION" ToRole="NIVEL" />
+        </EntityType>
+        <EntityType Name="NIVEL">
+          <Key>
+            <PropertyRef Name="NivelID" />
+          </Key>
+          <Property Name="NivelID" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="LeccionID" Type="Int32" />
+          <NavigationProperty Name="LECCION" Relationship="Self.FK__NIVEL__LeccionID__15502E78" FromRole="NIVEL" ToRole="LECCION" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__NIVEL__UsuarioID__145C0A3F" FromRole="NIVEL" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="Modo" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NIVEL" Relationship="Self.FK__NIVEL__UsuarioID__145C0A3F" FromRole="USUARIO" ToRole="NIVEL" />
+          <NavigationProperty Name="PROGRESO" Relationship="Self.FK__PROGRESO__Usuari__173876EA" FromRole="USUARIO" ToRole="PROGRESO" />
+        </EntityType>
+        <EntityType Name="PROGRESO">
+          <Key>
+            <PropertyRef Name="ProgresoID" />
+          </Key>
+          <Property Name="ProgresoID" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="PPMC" Type="Int32" />
+          <Property Name="Leccion" Type="Int32" />
+          <Property Name="Nivel" Type="Int32" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__PROGRESO__Usuari__173876EA" FromRole="PROGRESO" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK__NIVEL__LeccionID__15502E78">
+          <End Role="LECCION" Type="Self.LECCION" Multiplicity="0..1" />
+          <End Role="NIVEL" Type="Self.NIVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LECCION">
+              <PropertyRef Name="LeccionID" />
+            </Principal>
+            <Dependent Role="NIVEL">
+              <PropertyRef Name="LeccionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NIVEL__UsuarioID__145C0A3F">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="NIVEL" Type="Self.NIVEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="NIVEL">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROGRESO__Usuari__173876EA">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="PROGRESO" Type="Self.PROGRESO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="PROGRESO">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TYPINGEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LECCION" EntityType="Self.LECCION" />
+          <EntitySet Name="NIVEL" EntityType="Self.NIVEL" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <EntitySet Name="PROGRESO" EntityType="Self.PROGRESO" />
+          <AssociationSet Name="FK__NIVEL__LeccionID__15502E78" Association="Self.FK__NIVEL__LeccionID__15502E78">
+            <End Role="LECCION" EntitySet="LECCION" />
+            <End Role="NIVEL" EntitySet="NIVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NIVEL__UsuarioID__145C0A3F" Association="Self.FK__NIVEL__UsuarioID__145C0A3F">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="NIVEL" EntitySet="NIVEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROGRESO__Usuari__173876EA" Association="Self.FK__PROGRESO__Usuari__173876EA">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="PROGRESO" EntitySet="PROGRESO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TYPINGModelStoreContainer" CdmEntityContainer="TYPINGEntities">
+          <EntitySetMapping Name="LECCION">
+            <EntityTypeMapping TypeName="TYPINGModel.LECCION">
+              <MappingFragment StoreEntitySet="LECCION">
+                <ScalarProperty Name="LeccionID" ColumnName="LeccionID" />
+                <ScalarProperty Name="Parrafo" ColumnName="Parrafo" />
+                <ScalarProperty Name="PPM" ColumnName="PPM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NIVEL">
+            <EntityTypeMapping TypeName="TYPINGModel.NIVEL">
+              <MappingFragment StoreEntitySet="NIVEL">
+                <ScalarProperty Name="NivelID" ColumnName="NivelID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="LeccionID" ColumnName="LeccionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="TYPINGModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Modo" ColumnName="Modo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROGRESO">
+            <EntityTypeMapping TypeName="TYPINGModel.PROGRESO">
+              <MappingFragment StoreEntitySet="PROGRESO">
+                <ScalarProperty Name="ProgresoID" ColumnName="ProgresoID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="PPMC" ColumnName="PPMC" />
+                <ScalarProperty Name="Leccion" ColumnName="Leccion" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
